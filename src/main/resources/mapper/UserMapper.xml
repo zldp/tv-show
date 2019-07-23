@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlsoft.dao.UserMapper">
+  <resultMap id="BaseResultMap" type="com.zlsoft.model.UserDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="reg_time" jdbcType="TIMESTAMP" property="regTime" />
+  </resultMap>
+
+  <resultMap id="userInfo" type="com.zlsoft.model.UserDto">
+    <id column="user_id" jdbcType="VARCHAR" property="userId" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="reg_time" jdbcType="TIMESTAMP" property="regTime" />
+    <result column="ward_id" jdbcType="TIMESTAMP" property="wardId" />
+    <result column="ward_name" jdbcType="TIMESTAMP" property="wardName" />
+    <collection property="roles" ofType="com.zlsoft.model.RoleDto">
+      <id column="role_id" jdbcType="INTEGER" property="roleId" />
+      <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+      <result column="remake" jdbcType="VARCHAR" property="remake" />
+      <collection property="permissions" ofType="com.zlsoft.model.PermissionDto">
+        <id column="per_id" jdbcType="INTEGER" property="perId" />
+        <result column="per_name" jdbcType="VARCHAR" property="perName" />
+        <result column="per_code" jdbcType="VARCHAR" property="perCode" />
+      </collection>
+    </collection>
+  </resultMap>
+  <select id="selectInfo" resultType="com.zlsoft.model.UserDto" resultMap="userInfo">
+    select
+    u.user_id,
+    u.account,
+    u.password,
+    u.username,
+    u.reg_time,
+    u.ward_id,
+    u.ward_name,
+    r.role_id,
+    r.role_name,
+    r.remake,
+    p.per_id,
+    p.per_name,
+    p.per_code
+    from user as u left join user_role as ur
+    on u.user_id = ur.user_id left join role as r
+    on r.role_id = ur.role_id left join role_permission as rp
+    on r.role_id = rp.role_id left join permission as p
+    on rp.permission_id = p.per_id where account = #{account}
+  </select>
+
+</mapper>

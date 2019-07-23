@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlsoft.dao.RoleMapper">
+  <resultMap id="BaseResultMap" type="com.zlsoft.model.RoleDto">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="roleId" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="remake" jdbcType="VARCHAR" property="remake" />
+  </resultMap>
+
+  <select id="findRoleByUser" resultType="com.zlsoft.model.RoleDto" parameterType="com.zlsoft.model.UserDto">
+    SELECT
+      r.role_id as roleId,
+      r.role_name as roleName,
+      r.remake as remake
+    FROM
+      user u
+    LEFT JOIN user_role ur ON u.user_id = ur.user_id
+    LEFT JOIN role r ON r.role_id = ur.role_id
+    <where>
+      1 = 1
+      <if test="account != null and account != '' ">
+        AND u.account = #{account}
+      </if>
+      <if test="username != null and username != '' ">
+        AND u.username LIKE CONCAT('%',#{username},'%')
+      </if>
+    </where>
+  </select>
+
+</mapper>
