@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlsoft.dao.TvPageDetailMapper">
+  <resultMap id="BaseResultMap" type="com.zlsoft.model.entity.TvPageDetail">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="page_id" jdbcType="INTEGER" property="pageId" />
+    <result column="panel_id" jdbcType="INTEGER" property="panelId" />
+    <result column="data_id" jdbcType="INTEGER" property="dataId" />
+    <result column="caption_style" jdbcType="VARCHAR" property="captionStyle" />
+    <result column="value_style" jdbcType="VARCHAR" property="valueStyle" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="show_level" jdbcType="INTEGER" property="showLevel" />
+  </resultMap>
+    <select id="getPageDeTail" resultType="java.util.Map">
+    SELECT
+      a.id,
+      a.page_id,
+      a.panel_id,
+      a.data_id,
+      REPLACE(REPLACE(a.caption_style,'{name}',b.data_name),'{value}',b.count_value) as caption_style,
+      a.value_style,
+      a.order_id,
+      a.show_level,
+      b.data_name,
+      b.type,
+      b.item_id,
+      b.list_field,
+      b.list_value,
+      b.count_value
+    FROM
+	  tv_page_detail AS a ,
+      tv_datasource AS b
+    WHERE
+      a.data_id = b.id
+    AND
+      b.enabled=1
+    ORDER BY
+      a.order_id
+    </select>
+</mapper>
