@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlsoft.dao.TvDatasourceFormatMapper">
+  <resultMap id="BaseResultMap" type="com.zlsoft.model.entity.TvDatasourceFormat">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="data_name" jdbcType="VARCHAR" property="dataName" />
+    <result column="abbreviation" jdbcType="VARCHAR" property="abbreviation" />
+    <result column="ward_id" jdbcType="VARCHAR" property="wardId" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="item_id" jdbcType="VARCHAR" property="itemId" />
+    <result column="item_name" jdbcType="VARCHAR" property="itemName" />
+    <result column="where_str" jdbcType="VARCHAR" property="whereStr" />
+    <result column="query_sql" jdbcType="VARCHAR" property="querySql" />
+    <result column="list_field" jdbcType="VARCHAR" property="listField" />
+    <result column="is_convert" jdbcType="INTEGER" property="isConvert" />
+    <result column="enabled" jdbcType="INTEGER" property="enabled" />
+  </resultMap>
+  <select id="getUpdate" resultType="java.util.Map">
+    SELECT
+    COUNT(1) AS count_value,
+    IFNULL( GROUP_CONCAT(CAST(${listField} AS CHAR(10)) SEPARATOR ','),"") AS list_value,
+    IFNULL(ward_id,"") AS ward_id,
+    IFNULL(#{dataName},"") AS data_name,
+    IFNULL(#{abbreviation},"") AS abbreviation
+    FROM
+    medical_order
+    WHERE
+    item_id IN(${itemId})
+    <if test="whereStr != null and whereStr != ''">
+      ${whereStr}
+    </if>
+    <if test="wardId!=null and wardId!=''">
+      AND ward_id = #{wardId}
+    </if>
+    GROUP BY ward_id
+
+  </select>
+  <select id="getUpdateBySQL" resultType="java.util.Map">
+    ${sql}
+  </select>
+  <select id="getTimingTime" resultType="java.util.Map">
+    select parameter_value,comments from system_parameter where parameter_name = #{parameterName}
+  </select>
+
+  <select id="getAllWardId" resultType="java.lang.String">
+    SELECT DISTINCT ward_id FROM medical_order ORDER BY ward_id
+  </select>
+</mapper>

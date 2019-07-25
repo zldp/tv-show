@@ -20,24 +20,24 @@
       a.page_id,
       a.panel_id,
       a.data_id,
-      REPLACE(REPLACE(a.caption_style,'{name}',b.data_name),'{value}',b.count_value) as caption_style,
-      a.value_style,
+      REPLACE(REPLACE(a.caption_style,'{name}',b.data_name),'{value}',b.count_value) AS caption_style,
+      REPLACE(a.value_style,'{value}',b.list_value) AS value_style,
       a.order_id,
-      a.show_level,
-      b.data_name,
-      b.type,
-      b.item_id,
-      b.list_field,
-      b.list_value,
-      b.count_value
+      a.show_level
     FROM
-	  tv_page_detail AS a ,
-      tv_datasource AS b
+      tv_page_detail AS a ,
+      tv_datasource_data AS b
     WHERE
       a.data_id = b.id
-    AND
-      b.enabled=1
-    ORDER BY
-      a.order_id
+
+      AND a.page_id = #{pageId}
+
+
+      AND b.ward_id = #{wardId}
+
+
+      AND a.panel_id = #{panelId}
+
+    ORDER BY a.order_id
     </select>
 </mapper>

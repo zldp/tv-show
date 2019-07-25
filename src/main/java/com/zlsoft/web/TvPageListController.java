@@ -2,6 +2,7 @@ package com.zlsoft.web;
 
 import com.zlsoft.core.Result;
 import com.zlsoft.core.ResultGenerator;
+import com.zlsoft.model.TvPageListDto;
 import com.zlsoft.model.entity.TvPageList;
 import com.zlsoft.service.TvPageListService;
 import com.zlsoft.model.common.BaseDto;
@@ -61,13 +62,9 @@ public class TvPageListController {
 
     @GetMapping("getByWardId")
     public Result getByWardId(String wardId){
-        //TvPageList tvPageList = tvPageListService.findBy("wardId", wardId + " OR ward_id IS NULL AND visible = 1 ORDER BY order_id");
-        Condition condition = new Condition(TvPageList.class);
-        condition.createCriteria().
-                andCondition("ward_id = ", wardId).orIsNull("wardId").
-                orCondition("ward_id = ","").andCondition("visible = ","1");
-        condition.orderBy("orderId");
-        List<TvPageList> byCondition = tvPageListService.findByCondition(condition);
+
+        List<TvPageListDto> byCondition = tvPageListService.selectByWardId(wardId);
+
         return ResultGenerator.genSuccessResult(byCondition);
     }
 }

@@ -2,8 +2,8 @@ package com.zlsoft.web;
 
 import com.zlsoft.core.Result;
 import com.zlsoft.core.ResultGenerator;
-import com.zlsoft.model.entity.TvDatasource;
-import com.zlsoft.service.TvDatasourceService;
+import com.zlsoft.model.entity.TvDatasourceFormat;
+import com.zlsoft.service.TvDatasourceFormatService;
 import com.zlsoft.model.common.BaseDto;
 import org.springframework.validation.annotation.Validated;
 import com.github.pagehelper.PageHelper;
@@ -14,36 +14,36 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
-* Created by DP on 2019/07/24.
+* Created by DP on 2019/07/25.
 */
 @RestController
-@RequestMapping("/tv/datasource")
-public class TvDatasourceController {
+@RequestMapping("/tv/datasource/format")
+public class TvDatasourceFormatController {
     @Resource
-    private TvDatasourceService tvDatasourceService;
+    private TvDatasourceFormatService tvDatasourceFormatService;
 
     @PostMapping
-    public Result add(@RequestBody TvDatasource tvDatasource) {
-        tvDatasourceService.save(tvDatasource);
+    public Result add(@RequestBody TvDatasourceFormat tvDatasourceFormat) {
+        tvDatasourceFormatService.save(tvDatasourceFormat);
         return ResultGenerator.genSuccessResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id) {
-        tvDatasourceService.deleteById(id);
+        tvDatasourceFormatService.deleteById(id);
         return ResultGenerator.genSuccessResult();
     }
 
     @PutMapping
-    public Result update(@RequestBody TvDatasource tvDatasource) {
-        tvDatasourceService.update(tvDatasource);
+    public Result update(@RequestBody TvDatasourceFormat tvDatasourceFormat) {
+        tvDatasourceFormatService.update(tvDatasourceFormat);
         return ResultGenerator.genSuccessResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Integer id) {
-        TvDatasource tvDatasource = tvDatasourceService.findById(id);
-        return ResultGenerator.genSuccessResult(tvDatasource);
+        TvDatasourceFormat tvDatasourceFormat = tvDatasourceFormatService.findById(id);
+        return ResultGenerator.genSuccessResult(tvDatasourceFormat);
     }
 
     @GetMapping
@@ -53,13 +53,20 @@ public class TvDatasourceController {
             baseDto.setRows(10);
         }
         PageHelper.startPage(baseDto.getPage(), baseDto.getRows());
-        List<TvDatasource> list = tvDatasourceService.findAll();
+        List<TvDatasourceFormat> list = tvDatasourceFormatService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
     }
-    @PostMapping("timingUpdate")
-    public void timingUpdate(){
-        tvDatasourceService.timingUpdate();
 
+    @PostMapping("timingUpdate")
+    public Result timingUpdate(){
+        tvDatasourceFormatService.timingUpdate();
+        return ResultGenerator.genSuccessResult();
+    }
+
+    @GetMapping("getAllWardId")
+    public Result getAllWardId(){
+
+        return ResultGenerator.genSuccessResult(tvDatasourceFormatService.getAllWardId());
     }
 }

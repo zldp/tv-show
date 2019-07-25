@@ -22,7 +22,7 @@ public class TvPageDetailServiceImpl extends AbstractService<TvPageDetail> imple
     private TvPageDetailMapper tvPageDetailMapper;
 
     @Override
-    public List<Map<String, Object>> getPageDeTail() {
-        return tvPageDetailMapper.getPageDeTail();
+    public List<Map<String,Object>> getPageDeTail(Map<String,Object> parpams){
+        return tvPageDetailMapper.getPageDeTail(parpams);
     }
 }

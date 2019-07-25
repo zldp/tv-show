@@ -11,5 +11,5 @@ public interface TvPageDetailMapper extends Mapper<TvPageDetail> {
      * 获取大屏显示的数据
      * @return
      */
-    List<Map<String,Object>> getPageDeTail();
+    List<Map<String,Object>> getPageDeTail(Map<String,Object> parpams);
 }
