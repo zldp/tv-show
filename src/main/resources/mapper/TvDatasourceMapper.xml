@@ -18,7 +18,7 @@
     <result column="list_field" jdbcType="VARCHAR" property="listField" />
     <result column="converta" jdbcType="INTEGER" property="converta" />
     <result column="list_value" jdbcType="VARCHAR" property="listValue" />
-    <result column="enabled" jdbcType="INTEGER" property="enabled" />
+    <result column="is_enabled" jdbcType="INTEGER" property="isEnabled" />
   </resultMap>
     <select id="getUpdate" resultType="java.util.Map">
       SELECT

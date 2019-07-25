@@ -9,6 +9,7 @@ import org.springframework.validation.annotation.Validated;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
+import tk.mybatis.mapper.entity.Condition;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -56,5 +57,17 @@ public class TvPageListController {
         List<TvPageList> list = tvPageListService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
+    }
+
+    @GetMapping("getByWardId")
+    public Result getByWardId(String wardId){
+        //TvPageList tvPageList = tvPageListService.findBy("wardId", wardId + " OR ward_id IS NULL AND visible = 1 ORDER BY order_id");
+        Condition condition = new Condition(TvPageList.class);
+        condition.createCriteria().
+                andCondition("ward_id = ", wardId).orIsNull("wardId").
+                orCondition("ward_id = ","").andCondition("visible = ","1");
+        condition.orderBy("orderId");
+        List<TvPageList> byCondition = tvPageListService.findByCondition(condition);
+        return ResultGenerator.genSuccessResult(byCondition);
     }
 }
