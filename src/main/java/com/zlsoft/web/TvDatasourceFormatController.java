@@ -5,10 +5,12 @@ import com.zlsoft.core.ResultGenerator;
 import com.zlsoft.model.entity.TvDatasourceFormat;
 import com.zlsoft.service.TvDatasourceFormatService;
 import com.zlsoft.model.common.BaseDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -21,6 +23,9 @@ import java.util.List;
 public class TvDatasourceFormatController {
     @Resource
     private TvDatasourceFormatService tvDatasourceFormatService;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @PostMapping
     public Result add(@RequestBody TvDatasourceFormat tvDatasourceFormat) {
@@ -67,6 +72,6 @@ public class TvDatasourceFormatController {
     @GetMapping("getAllWardId")
     public Result getAllWardId(){
 
-        return ResultGenerator.genSuccessResult(tvDatasourceFormatService.getAllWardId());
+        return restTemplate.getForObject("http://localhost:8089/ward", Result.class);
     }
 }
