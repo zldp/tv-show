@@ -26,7 +26,7 @@ public class TvPageListServiceImpl extends AbstractService<TvPageList> implement
      * @return
      */
     @Override
-    public List<TvPageListDto> selectByWardId(String wardId) {
+    public List<TvPageList> selectByWardId(String wardId) {
         return tvPageListMapper.selectByWardId(wardId);
     }
 }

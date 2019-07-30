@@ -45,6 +45,18 @@ public class TvPagePanel {
     private Integer panelHeight;
 
     /**
+     * 数据类型0:本地 1:接口
+     */
+    @Column(name = "data_type")
+    private Integer dataType;
+
+    /**
+     * sql语句
+     */
+    @Column(name = "data_sql")
+    private String dataSql;
+
+    /**
      * @return id
      */
     public Integer getId() {
@@ -164,5 +176,41 @@ public class TvPagePanel {
      */
     public void setPanelHeight(Integer panelHeight) {
         this.panelHeight = panelHeight;
+    }
+
+    /**
+     * 获取数据类型0:本地 1:接口
+     *
+     * @return data_type - 数据类型0:本地 1:接口
+     */
+    public Integer getDataType() {
+        return dataType;
+    }
+
+    /**
+     * 设置数据类型0:本地 1:接口
+     *
+     * @param dataType 数据类型0:本地 1:接口
+     */
+    public void setDataType(Integer dataType) {
+        this.dataType = dataType;
+    }
+
+    /**
+     * 获取sql语句
+     *
+     * @return data_sql - sql语句
+     */
+    public String getDataSql() {
+        return dataSql;
+    }
+
+    /**
+     * 设置sql语句
+     *
+     * @param dataSql sql语句
+     */
+    public void setDataSql(String dataSql) {
+        this.dataSql = dataSql;
     }
 }

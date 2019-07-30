@@ -12,5 +12,7 @@
     <result column="panel_top" jdbcType="INTEGER" property="panelTop" />
     <result column="panel_width" jdbcType="INTEGER" property="panelWidth" />
     <result column="panel_height" jdbcType="INTEGER" property="panelHeight" />
+    <result column="data_type" jdbcType="INTEGER" property="dataType" />
+    <result column="data_sql" jdbcType="VARCHAR" property="dataSql" />
   </resultMap>
 </mapper>

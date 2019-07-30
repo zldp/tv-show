@@ -15,5 +15,5 @@ public interface TvPageListService extends Service<TvPageList> {
      * @param wardId
      * @return
      */
-    List<TvPageListDto> selectByWardId(String wardId);
+    List<TvPageList> selectByWardId(String wardId);
 }

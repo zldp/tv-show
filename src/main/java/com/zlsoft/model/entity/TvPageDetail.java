@@ -23,8 +23,8 @@ public class TvPageDetail {
     /**
      * 数据id
      */
-    @Column(name = "data_id")
-    private Integer dataId;
+    @Column(name = "format_id")
+    private Integer formatId;
 
     /**
      * 说明列样式 eg:{name}({count})
@@ -103,19 +103,19 @@ public class TvPageDetail {
     /**
      * 获取数据id
      *
-     * @return data_id - 数据id
+     * @return format_id - 数据id
      */
-    public Integer getDataId() {
-        return dataId;
+    public Integer getFormatId() {
+        return formatId;
     }
 
     /**
      * 设置数据id
      *
-     * @param dataId 数据id
+     * @param formatId 数据id
      */
-    public void setDataId(Integer dataId) {
-        this.dataId = dataId;
+    public void setFormatId(Integer formatId) {
+        this.formatId = formatId;
     }
 
     /**

@@ -9,6 +9,12 @@ public class TvDatasourceData {
     private Integer id;
 
     /**
+     * format表id
+     */
+    @Column(name = "format_id")
+    private Integer formatId;
+
+    /**
      * 数据名称
      */
     @Column(name = "data_name")
@@ -49,6 +55,24 @@ public class TvDatasourceData {
      */
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    /**
+     * 获取format表id
+     *
+     * @return format_id - format表id
+     */
+    public Integer getFormatId() {
+        return formatId;
+    }
+
+    /**
+     * 设置format表id
+     *
+     * @param formatId format表id
+     */
+    public void setFormatId(Integer formatId) {
+        this.formatId = formatId;
     }
 
     /**

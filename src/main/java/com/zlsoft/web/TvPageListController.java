@@ -6,10 +6,12 @@ import com.zlsoft.model.TvPageListDto;
 import com.zlsoft.model.entity.TvPageList;
 import com.zlsoft.service.TvPageListService;
 import com.zlsoft.model.common.BaseDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import tk.mybatis.mapper.entity.Condition;
 
 import javax.annotation.Resource;
@@ -23,6 +25,11 @@ import java.util.List;
 public class TvPageListController {
     @Resource
     private TvPageListService tvPageListService;
+
+    @Autowired
+    private RestTemplate restTemplate;
+
+    private String URL = "http://localhost:8089";
 
     @PostMapping
     public Result add(@RequestBody TvPageList tvPageList) {
@@ -63,8 +70,12 @@ public class TvPageListController {
     @GetMapping("getByWardId")
     public Result getByWardId(String wardId){
 
-        List<TvPageListDto> byCondition = tvPageListService.selectByWardId(wardId);
-
+        List<TvPageList> byCondition = tvPageListService.selectByWardId(wardId);
+        //List<TvPageList> all = tvPageListService.findAll();
         return ResultGenerator.genSuccessResult(byCondition);
+    }
+    @GetMapping("get")
+    public Result get(String wardId){
+        return restTemplate.getForObject(URL + "/patient?wardId="+wardId, Result.class);
     }
 }

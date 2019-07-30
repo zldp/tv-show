@@ -24,7 +24,8 @@
     IFNULL( GROUP_CONCAT(CAST(${listField} AS CHAR(10)) SEPARATOR ','),"") AS list_value,
     IFNULL(ward_id,"") AS ward_id,
     IFNULL(#{dataName},"") AS data_name,
-    IFNULL(#{abbreviation},"") AS abbreviation
+    IFNULL(#{abbreviation},"") AS abbreviation,
+    #{id} AS format_id
     FROM
     medical_order
     WHERE

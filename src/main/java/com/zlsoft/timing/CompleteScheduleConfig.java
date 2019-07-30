@@ -35,7 +35,8 @@ public class CompleteScheduleConfig implements SchedulingConfigurer {
 
             public void run() {
                 // 逻辑代码
-                tvDatasourceFormatService.timingUpdate();
+                System.out.println("执行刷新");
+                //tvDatasourceFormatService.timingUpdate();
 
             }
 

@@ -8,7 +8,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="page_id" jdbcType="INTEGER" property="pageId" />
     <result column="panel_id" jdbcType="INTEGER" property="panelId" />
-    <result column="data_id" jdbcType="INTEGER" property="dataId" />
+    <result column="format_id" jdbcType="INTEGER" property="formatId" />
     <result column="caption_style" jdbcType="VARCHAR" property="captionStyle" />
     <result column="value_style" jdbcType="VARCHAR" property="valueStyle" />
     <result column="order_id" jdbcType="INTEGER" property="orderId" />
@@ -19,7 +19,7 @@
       a.id,
       a.page_id,
       a.panel_id,
-      a.data_id,
+      a.format_id,
       REPLACE(REPLACE(a.caption_style,'{name}',b.data_name),'{value}',b.count_value) AS caption_style,
       REPLACE(a.value_style,'{value}',b.list_value) AS value_style,
       a.order_id,
@@ -28,7 +28,7 @@
       tv_page_detail AS a ,
       tv_datasource_data AS b
     WHERE
-      a.data_id = b.id
+      a.format_id = b.format_id
 
       AND a.page_id = #{pageId}
 

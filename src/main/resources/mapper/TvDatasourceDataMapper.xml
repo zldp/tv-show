@@ -6,6 +6,7 @@
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="format_id" jdbcType="INTEGER" property="formatId" />
     <result column="data_name" jdbcType="VARCHAR" property="dataName" />
     <result column="abbreviation" jdbcType="VARCHAR" property="abbreviation" />
     <result column="ward_id" jdbcType="VARCHAR" property="wardId" />
@@ -13,11 +14,11 @@
     <result column="list_value" jdbcType="VARCHAR" property="listValue" />
   </resultMap>
     <insert id="insertByMap">
-      insert into tv_datasource_data(ward_id,count_value,list_value,data_name,abbreviation)
+      insert into tv_datasource_data(ward_id,count_value,list_value,data_name,abbreviation,format_id)
       values
       <foreach collection="list" index="index" item="m" separator=",">
         (
-          #{m.ward_id},#{m.count_value},#{m.list_value},#{m.data_name},#{m.abbreviation}
+          #{m.ward_id},#{m.count_value},#{m.list_value},#{m.data_name},#{m.abbreviation},#{m.format_id}
         )
       </foreach>
     </insert>
