@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zlsoft.dao.HandoverInfoMapper">
+  <resultMap id="BaseResultMap" type="com.zlsoft.model.entity.HandoverInfo">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="ward_id" jdbcType="INTEGER" property="wardId" />
+    <result column="patient_id" jdbcType="INTEGER" property="patientId" />
+    <result column="index_id" jdbcType="INTEGER" property="indexId" />
+    <result column="bed_no" jdbcType="VARCHAR" property="bedNo" />
+    <result column="patient_name" jdbcType="VARCHAR" property="patientName" />
+    <result column="publish_time" jdbcType="TIMESTAMP" property="publishTime" />
+    <result column="publish_class" jdbcType="VARCHAR" property="publishClass" />
+    <result column="publish_nurse_id" jdbcType="VARCHAR" property="publishNurseId" />
+    <result column="publish_nurse_name" jdbcType="VARCHAR" property="publishNurseName" />
+    <result column="handover_content" jdbcType="VARCHAR" property="handoverContent" />
+    <result column="receive_time" jdbcType="TIMESTAMP" property="receiveTime" />
+    <result column="receive_class" jdbcType="VARCHAR" property="receiveClass" />
+    <result column="receive_nurse_id" jdbcType="VARCHAR" property="receiveNurseId" />
+    <result column="receive_nurse_name" jdbcType="VARCHAR" property="receiveNurseName" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+    <select id="selectHandoverInfoByWardId" resultType="java.util.Map">
+      SELECT publish_time,publish_nurse_name,bed_no,handover_content,ifnull(receive_nurse_name,"") as receive_nurse_name FROM handover_info WHERE ward_id=#{wardId} AND (state=0 OR (state=1 AND DATE(receive_time)=DATE(NOW())))
+    </select>
+</mapper>
