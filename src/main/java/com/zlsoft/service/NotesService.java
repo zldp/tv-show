@@ -4,7 +4,7 @@ import com.zlsoft.core.Service;
 
 
 /**
- * Created by DP on 2019/10/12.
+ * Created by DP on 2019/11/08.
  */
 public interface NotesService extends Service<Notes> {
 

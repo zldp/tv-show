@@ -13,6 +13,12 @@ public class Notes {
     private String content;
 
     /**
+     * 病区id
+     */
+    @Column(name = "ward_id")
+    private String wardId;
+
+    /**
      * @return id
      */
     public Integer getId() {
@@ -42,5 +48,23 @@ public class Notes {
      */
     public void setContent(String content) {
         this.content = content;
+    }
+
+    /**
+     * 获取病区id
+     *
+     * @return ward_id - 病区id
+     */
+    public String getWardId() {
+        return wardId;
+    }
+
+    /**
+     * 设置病区id
+     *
+     * @param wardId 病区id
+     */
+    public void setWardId(String wardId) {
+        this.wardId = wardId;
     }
 }

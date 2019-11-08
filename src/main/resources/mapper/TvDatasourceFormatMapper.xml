@@ -35,6 +35,9 @@
     <if test="wardId!=null and wardId!=''">
       AND ward_id = #{wardId}
     </if>
+    <if test="frequency!=null and frequency!=''">
+      AND frequency = #{frequency}
+    </if>
     And IFNULL(state,0) in(1,2,3,5,7)
     And (effect_period=0 and  (end_time>NOW() or end_time is null)  or effect_period=1 and DATE_FORMAT(start_time, '%Y-%m-%d') >=DATE_FORMAT(NOW(), '%Y-%m-%d') ) ) a GROUP BY ward_id
   </select>
