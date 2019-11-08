@@ -6,6 +6,7 @@ import com.zlsoft.model.entity.TvPagePanel;
 import com.zlsoft.service.TvPagePanelService;
 import com.zlsoft.model.common.BaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -27,6 +28,8 @@ public class TvPagePanelController {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${api.url}")
     private String URL = "http://localhost:8089";
 
     @PostMapping

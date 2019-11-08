@@ -6,6 +6,7 @@ import com.zlsoft.model.entity.TvDatasourceFormat;
 import com.zlsoft.service.TvDatasourceFormatService;
 import com.zlsoft.model.common.BaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -23,6 +24,8 @@ import java.util.List;
 public class TvDatasourceFormatController {
     @Resource
     private TvDatasourceFormatService tvDatasourceFormatService;
+    @Value("${api.url}")
+    private String URL;
 
     @Autowired
     private RestTemplate restTemplate;
@@ -72,6 +75,6 @@ public class TvDatasourceFormatController {
     @GetMapping("getAllWardId")
     public Result getAllWardId(){
 
-        return restTemplate.getForObject("http://localhost:8089/ward", Result.class);
+        return restTemplate.getForObject(URL+"/ward", Result.class);
     }
 }

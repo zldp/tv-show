@@ -10,7 +10,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -18,6 +20,7 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.validation.ValidationException;
 import java.util.*;
 
 /**
@@ -27,6 +30,17 @@ import java.util.*;
  */
 @RestControllerAdvice
 public class ExceptionAdvice {
+    /**
+     * RequestParam标签验证异常
+     * @param exception
+     * @return
+     */
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public Result handle(MissingServletRequestParameterException exception) {
+
+        return new Result(HttpStatus.BAD_REQUEST.value(), exception.getMessage(), null);
+    }
     /**
      * 捕捉所有Shiro异常
      * @param e
@@ -95,7 +109,11 @@ public class ExceptionAdvice {
     public Result validedException(ConstraintViolationException e) {
 
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-        return new Result(HttpStatus.BAD_REQUEST.value(), constraintViolations.toString(), null);
+        StringBuffer message = new StringBuffer();
+        for (ConstraintViolation constraintViolation : constraintViolations) {
+            message.append(constraintViolation.getMessage() + ",");
+        }
+        return new Result(HttpStatus.BAD_REQUEST.value(), message.toString(), null);
     }
 
 

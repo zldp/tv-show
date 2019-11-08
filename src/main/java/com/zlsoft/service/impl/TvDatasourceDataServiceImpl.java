@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -20,4 +22,8 @@ public class TvDatasourceDataServiceImpl extends AbstractService<TvDatasourceDat
     private TvDatasourceDataMapper tvDatasourceDataMapper;
 
 
+    @Override
+    public List<Map<String,Object>> selectByWardI(String wardId) {
+        return tvDatasourceDataMapper.selectByWardI(wardId);
+    }
 }

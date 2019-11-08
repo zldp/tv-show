@@ -12,4 +12,6 @@ public interface TvDatasourceDataMapper extends Mapper<TvDatasourceData> {
      * @param list
      */
     void insertByMap(List<Map<String, Object>> list);
+
+    List<Map<String,Object>> selectByWardI(String wardId);
 }

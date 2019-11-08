@@ -22,4 +22,11 @@
         )
       </foreach>
     </insert>
+    <select id="selectByWardI" resultType="java.util.Map">
+      SELECT c.bed_no,GROUP_CONCAT(CAST(c.abbreviation AS CHAR(10)) SEPARATOR ',') AS abbreviation FROM
+      (SELECT a.abbreviation,SUBSTRING_INDEX(SUBSTRING_INDEX(a.list_value,',',b.help_topic_id+1),',',-1) AS bed_no
+      FROM tv_datasource_data a LEFT JOIN mysql.help_topic b
+      ON b.help_topic_id <![CDATA[ <  ]]> (LENGTH(a.list_value)-LENGTH(REPLACE(a.list_value,',',''))+1) WHERE ward_id=#{wardId} AND abbreviation <![CDATA[ <>  ]]>'') c
+      GROUP BY c.bed_no
+    </select>
 </mapper>

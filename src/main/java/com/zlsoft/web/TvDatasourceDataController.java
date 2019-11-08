@@ -5,10 +5,13 @@ import com.zlsoft.core.ResultGenerator;
 import com.zlsoft.model.entity.TvDatasourceData;
 import com.zlsoft.service.TvDatasourceDataService;
 import com.zlsoft.model.common.BaseDto;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -22,6 +25,11 @@ public class TvDatasourceDataController {
     @Resource
     private TvDatasourceDataService tvDatasourceDataService;
 
+    @Autowired
+    private RestTemplate restTemplate;
+
+    @Value("${api.url}")
+    private String URL;
     @PostMapping
     public Result add(@RequestBody TvDatasourceData tvDatasourceData) {
         tvDatasourceDataService.save(tvDatasourceData);
@@ -56,5 +64,22 @@ public class TvDatasourceDataController {
         List<TvDatasourceData> list = tvDatasourceDataService.findAll();
         PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genSuccessResult(pageInfo);
+    }
+
+    @GetMapping("getBedNoAndGroup")
+    public Result getBedNoAndGroup(String wardId){
+
+        return ResultGenerator.genSuccessResult(tvDatasourceDataService.selectByWardI(wardId));
+    }
+
+    /**
+     * 查询手术信息
+     */
+    @GetMapping("/operation/{wardId}")
+    public Result operation(
+            @PathVariable Integer wardId
+    ){
+
+        return restTemplate.getForObject(URL+"/operation?wardId="+wardId, Result.class);
     }
 }

@@ -9,6 +9,7 @@ import com.zlsoft.util.common.JsonConvertUtil;
 import com.zlsoft.util.common.PropertiesUtil;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.web.filter.authc.BasicHttpAuthenticationFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,6 +28,7 @@ import java.io.PrintWriter;
  * @author dp926454
  * @date 2018/8/30 15:47
  */
+@Slf4j
 public class JwtFilter extends BasicHttpAuthenticationFilter {
     /**
      * LOGGER
@@ -46,7 +48,7 @@ public class JwtFilter extends BasicHttpAuthenticationFilter {
      */
     @Override
     protected boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) {
-        System.out.println("进行jwt验证");
+        log.info("进行jwt验证-----------------------------------------------------------------------------------");
         // 判断用户是否想要登入
         if (this.isLoginAttempt(request, response)) {
             try {

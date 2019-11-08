@@ -7,6 +7,7 @@ import com.zlsoft.model.entity.TvPageList;
 import com.zlsoft.service.TvPageListService;
 import com.zlsoft.model.common.BaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.validation.annotation.Validated;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -29,7 +30,8 @@ public class TvPageListController {
     @Autowired
     private RestTemplate restTemplate;
 
-    private String URL = "http://localhost:8089";
+    @Value("${api.url}")
+    private String URL;
 
     @PostMapping
     public Result add(@RequestBody TvPageList tvPageList) {

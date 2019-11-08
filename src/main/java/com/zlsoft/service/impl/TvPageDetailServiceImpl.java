@@ -25,4 +25,19 @@ public class TvPageDetailServiceImpl extends AbstractService<TvPageDetail> imple
     public List<Map<String,Object>> getPageDeTail(Map<String,Object> parpams){
         return tvPageDetailMapper.getPageDeTail(parpams);
     }
+
+    @Override
+    public List<Map<String, Object>> selectMedicalByPatientIdAndIndexId(Map<String, Object> parpams) {
+        return tvPageDetailMapper.selectMedicalByPatientIdAndIndexId(parpams);
+    }
+
+    @Override
+    public String getNursingGrade(Map<String, Object> parpams) {
+        return tvPageDetailMapper.getNursingGrade(parpams);
+    }
+
+    @Override
+    public List<Map<String, Object>> getTaskOrderInfo(Integer wardId) {
+        return tvPageDetailMapper.getTaskOrderInfo(wardId);
+    }
 }

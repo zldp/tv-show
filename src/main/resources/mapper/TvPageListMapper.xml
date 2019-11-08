@@ -14,31 +14,16 @@
     <result column="visible" jdbcType="INTEGER" property="visible" />
     <result column="stay_time" jdbcType="INTEGER" property="stayTime" />
   </resultMap>
-  <resultMap id="selectByWardId" type="com.zlsoft.model.TvPageListDto">
-    <!--
-      WARNING - @mbg.generated
-    -->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="title" jdbcType="VARCHAR" property="title" />
-    <result column="type" jdbcType="INTEGER" property="type" />
-    <result column="page_address" jdbcType="VARCHAR" property="pageAddress" />
-    <result column="ward_id" jdbcType="VARCHAR" property="wardId" />
-    <result column="order_id" jdbcType="INTEGER" property="orderId" />
-    <result column="visible" jdbcType="INTEGER" property="visible" />
-    <result column="stay_time" jdbcType="INTEGER" property="stayTime" />
-    <collection property="tvPagePanels" ofType="com.zlsoft.model.entity.TvPagePanel" javaType="java.util.ArrayList">
-      <id column="pid" jdbcType="INTEGER" property="id" />
-      <result column="page_id" jdbcType="INTEGER" property="pageId" />
-      <result column="panel_id" jdbcType="INTEGER" property="panelId" />
-      <result column="panel_left" jdbcType="INTEGER" property="panelLeft" />
-      <result column="panel_top" jdbcType="INTEGER" property="panelTop" />
-      <result column="panel_width" jdbcType="INTEGER" property="panelWidth" />
-      <result column="panel_height" jdbcType="INTEGER" property="panelHeight" />
-    </collection>
-  </resultMap>
     <select id="selectByWardId" resultType="com.zlsoft.model.entity.TvPageList">
       SELECT
-        *
+        a.id,
+        a.title,
+        a.type,
+        a.page_address AS pageAddress,
+        a.ward_id AS wardId,
+        a.order_id AS orderId,
+        a.visible,
+        a.stay_time AS stayTime
       FROM tv_page_list AS a
       WHERE (a.ward_id = #{wardId} OR a.ward_id IS NULL OR a.ward_id = "")
       AND a.visible = 1

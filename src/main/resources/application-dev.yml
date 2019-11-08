@@ -44,3 +44,6 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     # 合并多个DruidDataSource的监控数据
     useGlobalDataSourceStat: true
+# 自定义属性
+api:
+  url: http://192.168.0.222:8089

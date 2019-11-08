@@ -19,25 +19,24 @@
     <result column="enabled" jdbcType="INTEGER" property="enabled" />
   </resultMap>
   <select id="getUpdate" resultType="java.util.Map">
-    SELECT
-    COUNT(1) AS count_value,
-    IFNULL( GROUP_CONCAT(CAST(${listField} AS CHAR(10)) SEPARATOR ','),"") AS list_value,
-    IFNULL(ward_id,"") AS ward_id,
-    IFNULL(#{dataName},"") AS data_name,
-    IFNULL(#{abbreviation},"") AS abbreviation,
-    #{id} AS format_id
-    FROM
-    medical_order
-    WHERE
-    item_id IN(${itemId})
+    SELECT COUNT(1) AS count_value, IFNULL( GROUP_CONCAT(DISTINCT CAST(bed_no AS CHAR(10)) ORDER BY CHAR_LENGTH(bed_no),bed_no SEPARATOR ','),"") AS list_value,a.ward_id,a.data_name,a.abbreviation,a.format_id
+    FROM (SELECT DISTINCT bed_no,IFNULL(ward_id,"") AS ward_id,
+    IFNULL(#{dataName},"") AS data_name, IFNULL(#{abbreviation},"") AS abbreviation, #{id} AS format_id
+    FROM medical_order WHERE 1=1
+    <if test="itemId != null and itemId != ''">
+      AND item_id IN (${itemId})
+    </if>
+    <if test="itemName != null and itemName != ''">
+      AND item_name like CONCAT('%',#{itemName},'%')
+    </if>
     <if test="whereStr != null and whereStr != ''">
       ${whereStr}
     </if>
     <if test="wardId!=null and wardId!=''">
       AND ward_id = #{wardId}
     </if>
-    GROUP BY ward_id
-
+    And IFNULL(state,0) in(1,2,3,5,7)
+    And (effect_period=0 and  (end_time>NOW() or end_time is null)  or effect_period=1 and DATE_FORMAT(start_time, '%Y-%m-%d') >=DATE_FORMAT(NOW(), '%Y-%m-%d') ) ) a GROUP BY ward_id
   </select>
   <select id="getUpdateBySQL" resultType="java.util.Map">
     ${sql}

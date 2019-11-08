@@ -40,4 +40,29 @@
 
     ORDER BY a.order_id
     </select>
+  <select id="selectMedicalByPatientIdAndIndexId" resultType="java.util.Map">
+    SELECT
+    IFNULL(a.group_no,0) group_no,
+    IFNULL(a.row_no,0) row_no,
+    IFNULL(CASE a.effect_period WHEN 0 THEN '长期' ELSE '临时' END,"") AS effect_period,
+    IFNULL(a.item_name,"") AS content,
+    IFNULL(CONCAT(a.single_dose,IFNULL(a.dose_unit,'')),"") AS dosage,
+    IFNULL(a.frequency,"") AS frequency,
+    IFNULL(b.item_name,"") AS usage_name
+    FROM medical_order a LEFT JOIN medical_order b ON b.group_no IS NULL AND a.group_no=b.order_id
+      WHERE a.patient_id=#{patientId} AND a.index_id=#{indexId} AND NOT EXISTS (SELECT 1 FROM medical_order c WHERE a.order_id=c.group_no)
+      <if test="effectPeriod == 0">
+        AND a.effect_period = #{effectPeriod}
+      </if>
+      <if test="effectPeriod == 1">
+        AND a.effect_period != 0
+      </if>
+    ORDER BY a.effect_period,a.group_no,a.row_no
+  </select>
+    <select id="getNursingGrade" resultType="java.lang.String">
+      SELECT label_content FROM nursing_label WHERE patiend_id=#{patiendId} AND index_id=#{indexId}
+    </select>
+    <select id="getTaskOrderInfo" resultType="java.util.Map">
+      SELECT task_category,date_format(task_time,'%h:%i:%s') as task_time,bed_no,task_name FROM task_order WHERE ward_id=#{wardId} AND state &lt;&gt; 11 AND to_days(remind_time) = to_days(now())
+    </select>
 </mapper>
